@@ -46,7 +46,7 @@ CharacterNames getcharname(string name) {
 }
 
 int main() {
-  ifstream data("speakingorder.csv");
+  ifstream data("../speakingorder.csv");
   stringstream strstream;
   string line1;
   string line2;
