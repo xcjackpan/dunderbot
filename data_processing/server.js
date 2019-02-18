@@ -79,14 +79,12 @@ function buildcharchain(charfilename, linesobj) {
             linesobj[words[j - 1]] = [words[j].replace(/[^0-9a-z\-\'\%]/gi, '')];
           }
     
-          if (words[j-1][words[j-1].length - 1] === '.') {
-            linesobj[words[j-1]].push('.');
-          }
-          if (words[j-1][words[j-1].length - 1] === '!') {
-            linesobj[words[j-1]].push('!');
-          }
-          if (words[j-1][words[j-1].length - 1] === '?') {
-            linesobj[words[j-1]].push('?');
+          if (j === numwords - 1) {
+            if (linesobj.hasOwnProperty(words[j])) {
+              linesobj[words[j]].push('.');
+            } else {
+              linesobj[words[j]] = ['.'];
+            }
           }
         }
 
