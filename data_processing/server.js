@@ -21,10 +21,88 @@ let meredith = [];
 let angela = [];
 let oscar = [];
 
+let michael_lines = {'SENTENCE_START': []};
+let jim_lines = {'SENTENCE_START': []};
+let pam_lines = {'SENTENCE_START': []};
+let dwight_lines = {'SENTENCE_START': []};
+let stanley_lines = {'SENTENCE_START': []};
+let creed_lines = {'SENTENCE_START': []};
+let kevin_lines = {'SENTENCE_START': []};
+let phyllis_lines = {'SENTENCE_START': []};
+let toby_lines = {'SENTENCE_START': []};
+let erin_lines = {'SENTENCE_START': []};
+let ryan_lines = {'SENTENCE_START': []};
+let kelly_lines = {'SENTENCE_START': []};
+let meredith_lines = {'SENTENCE_START': []};
+let angela_lines = {'SENTENCE_START': []};
+let oscar_lines = {'SENTENCE_START': []};
+
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.listen(port);
 
+//Builds Michael's lines chain
+function buildcharchain(charfilename, linesobj) {
+  fs.readFile('../' + charfilename + '.csv', 'utf8', function(err,contents) {
+    result = contents.split(/\r?\n/);
+
+    let len = result.length;
+
+    for (var i = 0; i < len; i++) {
+      let sentences = result[i].split(/[\.|\?|\!]/);
+      let numsentences = sentences.length;
+
+      for (var n = 0; n < numsentences; n++) {
+        let words = sentences[n].split(' ');
+        let numwords = words.length;
+
+        let push = words[0].replace(/[^0-9a-z\-\'\%]/gi, '');
+        if (push != '') {
+          linesobj['SENTENCE_START'].push(push);
+        }
+
+        let flag = false;
+        for (let j = 1; j < numwords; j++) {
+        
+          if (words[j - 1].indexOf('[') != -1 || words[j - 1].indexOf(']') != -1 || words[j].indexOf('[') != -1 || words[j].indexOf(']') != -1) {
+            flag = !flag;
+            continue;
+          }
+
+          if (flag) continue;
+    
+          let push = words[0].replace(/[^0-9a-z\-\'\%]/gi, '');
+
+          if (linesobj.hasOwnProperty(words[j - 1]) && push != '') {
+            linesobj[words[j - 1]].push(words[j].replace(/[^0-9a-z\-\'\%]/gi, ''));
+          } else if (push != '') {
+            linesobj[words[j - 1]] = [words[j].replace(/[^0-9a-z\-\'\%]/gi, '')];
+          }
+    
+          if (words[j-1][words[j-1].length - 1] === '.') {
+            linesobj[words[j-1]].push('.');
+          }
+          if (words[j-1][words[j-1].length - 1] === '!') {
+            linesobj[words[j-1]].push('!');
+          }
+          if (words[j-1][words[j-1].length - 1] === '?') {
+            linesobj[words[j-1]].push('?');
+          }
+        }
+
+      }
+    }
+
+    let json = JSON.stringify(linesobj);
+    fs.writeFile('line_chains/' + charfilename + '.json', json, 'utf8', () => {});
+  });
+};
+
+buildcharchain('jim_lines', jim_lines);
+buildcharchain('michael_lines', michael_lines);
+buildcharchain('dwight_lines', dwight_lines);
+
+//Read for speaking order
 fs.readFile('../speakingorder.csv', 'utf8', function(err, contents) {
   result = contents.split(/\r?\n/);
   //console.log(result);
@@ -132,5 +210,5 @@ function jsonify(charname) {
       break;
   }
   let json = JSON.stringify(tmpobj);
-  fs.writeFile('line_chains/' + charname + '.json', json, 'utf8', () => {});
+  fs.writeFile('order_chains/' + charname + '.json', json, 'utf8', () => {});
 }
