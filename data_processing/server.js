@@ -57,7 +57,7 @@ function buildcharchain(charfilename, linesobj) {
         let numwords = words.length;
 
         let push = words[0].replace(/[^0-9a-z\-\'\%]/gi, '');
-        if (push != '') {
+        if (push != '' && push != '\'') {
           linesobj['SENTENCE_START'].push(push);
         }
 
@@ -73,9 +73,9 @@ function buildcharchain(charfilename, linesobj) {
     
           let push = words[0].replace(/[^0-9a-z\-\'\%]/gi, '');
 
-          if (linesobj.hasOwnProperty(words[j - 1]) && push != '') {
+          if (linesobj.hasOwnProperty(words[j - 1]) && push != '' && push != '\'') {
             linesobj[words[j - 1]].push(words[j].replace(/[^0-9a-z\-\'\%]/gi, ''));
-          } else if (push != '') {
+          } else if (push != '' && push != '\'') {
             linesobj[words[j - 1]] = [words[j].replace(/[^0-9a-z\-\'\%]/gi, '')];
           }
     
@@ -98,7 +98,19 @@ function buildcharchain(charfilename, linesobj) {
 
 buildcharchain('jim_lines', jim_lines);
 buildcharchain('michael_lines', michael_lines);
+buildcharchain('pam_lines', pam_lines);
 buildcharchain('dwight_lines', dwight_lines);
+buildcharchain('stanley_lines', stanley_lines);
+buildcharchain('creed_lines', creed_lines);
+buildcharchain('kevin_lines', kevin_lines);
+buildcharchain('erin_lines', erin_lines);
+buildcharchain('ryan_lines', ryan_lines);
+buildcharchain('kelly_lines', kelly_lines);
+buildcharchain('toby_lines', toby_lines);
+buildcharchain('phyllis_lines', phyllis_lines);
+buildcharchain('oscar_lines', oscar_lines);
+buildcharchain('angela_lines', angela_lines);
+buildcharchain('meredith_lines', meredith_lines);
 
 //Read for speaking order
 fs.readFile('../speakingorder.csv', 'utf8', function(err, contents) {
