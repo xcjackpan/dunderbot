@@ -13,6 +13,7 @@ const phyllis = require('./line_chains/phyllis_lines.json')
 const ryan = require('./line_chains/ryan_lines.json')
 const stanley = require('./line_chains/stanley_lines.json')
 const toby = require('./line_chains/toby_lines.json')
+const order = require('./order_chains/order.json')
 
 function generateSentence(character) {
   let word = character.SENTENCE_START[Math.floor(Math.random() * character.SENTENCE_START.length)];
@@ -34,4 +35,13 @@ function generateLine(character) {
   return line;
 }
 
-console.log(generateLine(angela));
+function generateDialogue(num) {
+  let characters = [];
+  let currchar = order.scene_start[Math.floor(Math.random() * order.scene_start.length)];
+  characters.push(currchar);
+  for (let i = 0; i < num; i++) {
+    currchar = order.currchar[Math.floor(Math.random() * order.currchar.length)];
+    characters.push(currchar);
+  }
+  return characters;
+}

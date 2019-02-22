@@ -5,6 +5,7 @@ let fs = require('fs')
 let result = [];
 
 let allowed = ["Michael", "Jim", "Pam", "Dwight", "Stanley", "Creed", "Kevin", "Phyllis", "Toby", "Erin", "Ryan", "Kelly", "Meredith", "Angela", "Oscar"];
+let scene_start = [];
 let michael = [];
 let jim = [];
 let pam = [];
@@ -43,7 +44,7 @@ app.listen(port);
 
 //Builds Michael's lines chain
 function buildcharchain(charfilename, linesobj) {
-  fs.readFile('../' + charfilename + '.csv', 'utf8', function(err,contents) {
+  fs.readFile('line_data/' + charfilename + '.csv', 'utf8', function(err,contents) {
     result = contents.split(/\r?\n/);
 
     let len = result.length;
@@ -113,10 +114,8 @@ buildcharchain('angela_lines', angela_lines);
 buildcharchain('meredith_lines', meredith_lines);
 
 //Read for speaking order
-fs.readFile('../speakingorder.csv', 'utf8', function(err, contents) {
+fs.readFile('line_data/speakingorder.csv', 'utf8', function(err, contents) {
   result = contents.split(/\r?\n/);
-  //console.log(result);
-
   let len = result.length;
 
   for (var i = 1; i < len; i++) {
@@ -130,7 +129,9 @@ fs.readFile('../speakingorder.csv', 'utf8', function(err, contents) {
       continue;
     }
 
-    if (line1[0] === line2[0]) {
+    if (line1[0] != line2[0]) { //Not the same scene, line2 holds the new scene
+      scene_start.push(line2[1]);
+    } else if (line1[0] === line2[0]) {
       switch(line1[1]) {
         case "Michael": michael.push(line2[1]);
           break;
@@ -166,59 +167,29 @@ fs.readFile('../speakingorder.csv', 'utf8', function(err, contents) {
     }
   }
 
-  jsonify("Michael");
-  jsonify("Jim");
-  jsonify("Pam");
-  jsonify("Dwight");
-  jsonify("Stanley");
-  jsonify("Creed");
-  jsonify("Kevin");
-  jsonify("Phyllis");
-  jsonify("Toby");
-  jsonify("Erin");
-  jsonify("Ryan");
-  jsonify("Kelly");
-  jsonify("Meredith");
-  jsonify("Angela");
-  jsonify("Oscar");
+  let speaking_order = {
+    "scene_start": scene_start,
+    "Angela": angela,
+    "Creed": creed,
+    "Dwight": dwight,
+    "Erin": erin,
+    "Jim": jim,
+    "Kelly": kelly,
+    "Kevin": kevin,
+    "Meredith": meredith,
+    "Michael": michael,
+    "Oscar": oscar,
+    "Pam": pam,
+    "Phyllis": phyllis,
+    "Ryan": ryan,
+    "Stanley": stanley,
+    "Toby": toby
+  }
+
+  jsonify(speaking_order);
 });
 
-function jsonify(charname) {
-  let tmpobj = {
-    name: charname,
-  }
-  switch(charname) {
-    case "Michael": tmpobj["next"] = michael;
-      break;
-    case "Jim": tmpobj["next"] = jim;
-      break;
-    case "Pam": tmpobj["next"] = pam;
-      break;
-    case "Dwight": tmpobj["next"] = dwight;
-      break;
-    case "Stanley": tmpobj["next"] = stanley;
-      break;
-    case "Creed": tmpobj["next"] = creed;
-      break;
-    case "Kevin": tmpobj["next"] = kevin;
-      break;
-    case "Phyllis": tmpobj["next"] = phyllis;
-      break;
-    case "Toby": tmpobj["next"] = toby;
-      break;
-    case "Erin": tmpobj["next"] = erin;
-      break;
-    case "Ryan": tmpobj["next"] = ryan;
-      break;
-    case "Kelly": tmpobj["next"] = kelly;
-      break;
-    case "Meredith": tmpobj["next"] = meredith;
-      break;
-    case "Angela": tmpobj["next"] = angela;
-      break;
-    case "Oscar": tmpobj["next"] = oscar;
-      break;
-  }
+function jsonify(tmpobj) {
   let json = JSON.stringify(tmpobj);
-  fs.writeFile('order_chains/' + charname + '.json', json, 'utf8', () => {});
+  fs.writeFile('order_chains/order.json', json, 'utf8', () => {});
 }
