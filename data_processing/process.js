@@ -1,7 +1,7 @@
 let fs = require('fs')
 let result = [];
 
-let allowed = ["Michael", "Jim", "Pam", "Dwight", "Stanley", "Creed", "Kevin", "Phyllis", "Toby", "Erin", "Ryan", "Kelly", "Meredith", "Angela", "Oscar"];
+let allowed = ["Michael", "Jim", "Pam", "Dwight", "Stanley", "Creed", "Kevin", "Phyllis", "Toby", "Erin", "Ryan", "Kelly", "Meredith", "Angela", "Oscar", "Andy"];
 let scene_start = [];
 let michael = [];
 let jim = [];
@@ -18,6 +18,7 @@ let kelly = [];
 let meredith = [];
 let angela = [];
 let oscar = [];
+let andy = [];
 
 let michael_lines = {'SENTENCE_START': []};
 let jim_lines = {'SENTENCE_START': []};
@@ -34,8 +35,8 @@ let kelly_lines = {'SENTENCE_START': []};
 let meredith_lines = {'SENTENCE_START': []};
 let angela_lines = {'SENTENCE_START': []};
 let oscar_lines = {'SENTENCE_START': []};
+let andy_lines = {'SENTENCE_START': []};
 
-//Builds Michael's lines chain
 function buildcharchain(charfilename, linesobj) {
   fs.readFile('line_data/' + charfilename + '.csv', 'utf8', function(err,contents) {
     result = contents.split(/\r?\n/);
@@ -112,6 +113,7 @@ buildcharchain('phyllis_lines', phyllis_lines);
 buildcharchain('oscar_lines', oscar_lines);
 buildcharchain('angela_lines', angela_lines);
 buildcharchain('meredith_lines', meredith_lines);
+buildcharchain('andy_lines', andy_lines);
 
 //Read for speaking order
 fs.readFile('line_data/speakingorder.csv', 'utf8', function(err, contents) {
@@ -163,6 +165,8 @@ fs.readFile('line_data/speakingorder.csv', 'utf8', function(err, contents) {
           break;
         case "Oscar": oscar.push(line2[1]);
           break;
+        case "Andy": andy.push(line2[1]);
+          break;
       }
     }
   }
@@ -183,7 +187,8 @@ fs.readFile('line_data/speakingorder.csv', 'utf8', function(err, contents) {
     "Phyllis": phyllis,
     "Ryan": ryan,
     "Stanley": stanley,
-    "Toby": toby
+    "Toby": toby,
+    "Andy": andy
   }
 
   jsonify(speaking_order);

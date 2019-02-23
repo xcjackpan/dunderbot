@@ -13,6 +13,7 @@ const phyllis = require('./line_chains/phyllis_lines.json')
 const ryan = require('./line_chains/ryan_lines.json')
 const stanley = require('./line_chains/stanley_lines.json')
 const toby = require('./line_chains/toby_lines.json')
+const andy = require('./line_chains/andy_lines.json')
 const order = require('./order_chains/order.json')
 
 function generateSentence(character) {
@@ -61,6 +62,8 @@ function generateLine(character) {
     case "angela": person = angela;
       break;
     case "oscar": person = oscar;
+      break;
+    case "andy": person = andy;
       break;
   }
   const numSentences = Math.ceil(Math.random() * 4);

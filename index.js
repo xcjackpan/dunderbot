@@ -15,6 +15,6 @@ app.get('/line', (req, res) => {
   return ret;
 });
 
-app.get('/fun', (req, res) => res.send(generate.generateLine("creed")))
+app.get('/fun', (req, res) => res.send(generate.generateLine("dwight")))
 
 app.listen(port)
