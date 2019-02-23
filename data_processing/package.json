@@ -2,7 +2,7 @@
   "name": "officechains",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "process.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,7 +16,5 @@
     "url": "https://github.com/xcjackpan/office_chains/issues"
   },
   "homepage": "https://github.com/xcjackpan/office_chains#readme",
-  "dependencies": {
-    "express": "^4.16.4"
-  }
+  "dependencies": {}
 }
