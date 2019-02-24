@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/xcjackpan/office_chains/issues"
   },
-  "homepage": "https://github.com/xcjackpan/office_chains#readme"
+  "homepage": "https://github.com/xcjackpan/office_chains#readme",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }

@@ -33,37 +33,37 @@ function generateSentence(character) {
 function generateLine(character) {
   let person;
   switch(character) {
-    case "michael": person = michael;
+    case "Michael": person = michael;
       break;
-    case "jim": person = jim;
+    case "Jim": person = jim;
       break;
-    case "pam": person = pam;
+    case "Pam": person = pam;
       break;
-    case "dwight": person = dwight;
+    case "Dwight": person = dwight;
       break;
-    case "stanley": person = stanley;
+    case "Stanley": person = stanley;
       break;
-    case "creed": person = creed;
+    case "Creed": person = creed;
       break;
-    case "kevin": person = kevin;
+    case "Kevin": person = kevin;
       break;
-    case "phyllis": person = phyllis;
+    case "Phyllis": person = phyllis;
       break;
-    case "toby": person = toby;
+    case "Toby": person = toby;
       break;
-    case "erin": person = erin;
+    case "Erin": person = erin;
       break;
-    case "ryan": person = ryan;
+    case "Ryan": person = ryan;
       break;
-    case "kelly": person = kelly;
+    case "Kelly": person = kelly;
       break;
-    case "meredith": person = meredith;
+    case "Meredith": person = meredith;
       break;
-    case "angela": person = angela;
+    case "Angela": person = angela;
       break;
-    case "oscar": person = oscar;
+    case "Oscar": person = oscar;
       break;
-    case "andy": person = andy;
+    case "Andy": person = andy;
       break;
   }
   const numSentences = Math.ceil(Math.random() * 4);
@@ -74,12 +74,13 @@ function generateLine(character) {
   return line;
 }
 
-function generateDialogue(num) {
+function generateDialogue() {
+  const num = Math.ceil(Math.random() * 4);
   let characters = [];
   let currchar = order.scene_start[Math.floor(Math.random() * order.scene_start.length)];
   characters.push(currchar);
   for (let i = 0; i < num; i++) {
-    currchar = order.currchar[Math.floor(Math.random() * order.currchar.length)];
+    currchar = order[currchar][Math.floor(Math.random() * order[currchar].length)];
     characters.push(currchar);
   }
   return characters;
