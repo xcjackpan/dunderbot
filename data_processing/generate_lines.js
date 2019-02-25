@@ -19,6 +19,7 @@ const order = require('./order_chains/order.json')
 function generateSentence(character) {
   let word = character.SENTENCE_START[Math.floor(Math.random() * character.SENTENCE_START.length)];
   let sentence = word;
+
   
   while (character[word]) {
     word = character[word][Math.floor(Math.random() * character[word].length)]
@@ -67,7 +68,9 @@ function generateLine(character) {
       break;
   }
   const numSentences = Math.ceil(Math.random() * 4);
-  let line = '';
+  let ran = Math.floor(Math.random() * 5);
+  let action = (ran === 3 || ran === 2) ? (person.ACTIONS[Math.floor(Math.random() * person.ACTIONS.length)] + ' ') : '';
+  let line = action;
   for (let i = 0; i < numSentences; i++) {
     line += generateSentence(person);
   }
@@ -75,9 +78,9 @@ function generateLine(character) {
 }
 
 function generateDialogue() {
-  const num = Math.ceil(Math.random() * 4);
+  const num = Math.ceil(Math.random() * 6);
   let characters = [];
-  let currchar = order.scene_start[Math.floor(Math.random() * order.scene_start.length)];
+  let currchar = order.SCENE_START[Math.floor(Math.random() * order.SCENE_START.length)];
   characters.push(currchar);
   for (let i = 0; i < num; i++) {
     currchar = order[currchar][Math.floor(Math.random() * order[currchar].length)];

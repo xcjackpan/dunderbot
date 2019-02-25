@@ -2,7 +2,7 @@ let fs = require('fs')
 let result = [];
 
 let allowed = ["Michael", "Jim", "Pam", "Dwight", "Stanley", "Creed", "Kevin", "Phyllis", "Toby", "Erin", "Ryan", "Kelly", "Meredith", "Angela", "Oscar", "Andy"];
-let scene_start = [];
+let SCENE_START = [];
 let michael = [];
 let jim = [];
 let pam = [];
@@ -20,29 +20,29 @@ let angela = [];
 let oscar = [];
 let andy = [];
 
-let michael_lines = {'SENTENCE_START': []};
-let jim_lines = {'SENTENCE_START': []};
-let pam_lines = {'SENTENCE_START': []};
-let dwight_lines = {'SENTENCE_START': []};
-let stanley_lines = {'SENTENCE_START': []};
-let creed_lines = {'SENTENCE_START': []};
-let kevin_lines = {'SENTENCE_START': []};
-let phyllis_lines = {'SENTENCE_START': []};
-let toby_lines = {'SENTENCE_START': []};
-let erin_lines = {'SENTENCE_START': []};
-let ryan_lines = {'SENTENCE_START': []};
-let kelly_lines = {'SENTENCE_START': []};
-let meredith_lines = {'SENTENCE_START': []};
-let angela_lines = {'SENTENCE_START': []};
-let oscar_lines = {'SENTENCE_START': []};
-let andy_lines = {'SENTENCE_START': []};
+let michael_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let jim_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let pam_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let dwight_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let stanley_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let creed_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let kevin_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let phyllis_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let toby_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let erin_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let ryan_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let kelly_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let meredith_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let angela_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let oscar_lines = {'SENTENCE_START': [], 'ACTIONS': []};
+let andy_lines = {'SENTENCE_START': [], 'ACTIONS': []};
 
 function buildcharchain(charfilename, linesobj) {
   fs.readFile('line_data/' + charfilename + '.csv', 'utf8', function(err,contents) {
     result = contents.split(/\r?\n/);
 
     let len = result.length;
-    let endflag = false;
+    let endflag = false; //Reduces number of periods read in
 
     for (var i = 0; i < len; i++) {
       let sentences = result[i].split(/[\.|\?|\!]/);
@@ -57,18 +57,31 @@ function buildcharchain(charfilename, linesobj) {
           linesobj['SENTENCE_START'].push(push);
         }
 
-        let flag = false;
+        let buildaction = false;
+        let action = '';
         for (let j = 1; j < numwords; j++) {
           
-          if ((words[j - 1].indexOf('[') != -1 && words[j - 1].indexOf(']') != -1) || (words[j].indexOf('[') != -1 && words[j].indexOf(']') != -1)) {
+          if (words[j - 1].indexOf('[') != -1 && words[j - 1].indexOf(']') != -1) {
+            linesobj['ACTIONS'].push(words[j - 1].replace('"', ''));
+            continue;
+          } else if (words[j].indexOf('[') != -1 && words[j].indexOf(']') != -1) {
+            continue;
+          } else if (words[j - 1].indexOf('[') != -1) {
+            buildaction = !buildaction;
+            action += words[j - 1];
+            continue;
+          } else if (words[j - 1].indexOf(']') != -1) {
+            buildaction = !buildaction;
+            action += (' ' + words[j - 1]);
+            linesobj['ACTIONS'].push(action.replace('"', ''));
+            action = '';
+            continue;
+          } else if (words[j].indexOf(']') != -1 || words[j].indexOf('[') != -1) {
+            continue;
+          } else if (buildaction) {
+            action += (' ' + words[j - 1].replace('"', ''));
             continue;
           }
-          if (words[j - 1].indexOf('[') != -1 || words[j - 1].indexOf(']') != -1 || words[j].indexOf('[') != -1 || words[j].indexOf(']') != -1) {
-            flag = !flag;
-            continue;
-          }
-
-          if (flag) continue;
     
           let push = words[0].replace(/[^0-9a-z\-\'\%]/gi, '');
 
@@ -132,7 +145,7 @@ fs.readFile('line_data/speakingorder.csv', 'utf8', function(err, contents) {
     }
 
     if (line1[0] != line2[0]) { //Not the same scene, line2 holds the new scene
-      scene_start.push(line2[1]);
+      SCENE_START.push(line2[1]);
     } else if (line1[0] === line2[0]) {
       switch(line1[1]) {
         case "Michael": michael.push(line2[1]);
@@ -172,7 +185,7 @@ fs.readFile('line_data/speakingorder.csv', 'utf8', function(err, contents) {
   }
 
   let speaking_order = {
-    "scene_start": scene_start,
+    "SCENE_START": SCENE_START,
     "Angela": angela,
     "Creed": creed,
     "Dwight": dwight,

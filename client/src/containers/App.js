@@ -36,7 +36,7 @@ class App extends Component {
     return (
       <div className="App">
         <Display scene={this.state.scene} />
-        <button onClick={this.generateScene}>Generate</button>
+        <button className="generate" onClick={this.generateScene}>Generate</button>
       </div>
     );
   }

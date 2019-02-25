@@ -12,7 +12,7 @@ class Display extends Component {
   render() {
     return (
       <div className="display">
-        {this.props.scene.map((elem) => <p>{elem.char}: {elem.line}</p>)}
+        {this.props.scene.map((elem) => <span display="line"><p className="char">{elem.char}:</p> <p className="line">{elem.line}</p></span>)}
       </div>
     );
   }
