@@ -6,6 +6,7 @@ const generate = require('./data_processing/generate_lines.js');
 const cors = require('cors');
 
 app.use(cors());
+app.use(express.static(__dirname + '/public'));
 app.listen(port);
 
 app.get('/line', (req, res) => {
