@@ -78,7 +78,7 @@ function generateLine(character) {
 }
 
 function generateDialogue() {
-  const num = Math.ceil(Math.random() * 6);
+  const num = Math.ceil(Math.random() * 4);
   let characters = [];
   let currchar = order.SCENE_START[Math.floor(Math.random() * order.SCENE_START.length)];
   characters.push(currchar);

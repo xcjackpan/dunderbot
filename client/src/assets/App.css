@@ -1,35 +1,81 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family:  courier;
+  background-image: url("background.png");
+  background-size: cover;
 }
 
 .App {
   min-height: 100vh;
   text-align: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
 .display {
-  min-height: 50vh;
+  height: 60vh;
   width: 50vw;
-  padding: 2vh;
+  padding: 4vh;
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
   text-align: left;
+  background-color: #F5F5F5;
+  opacity: 0.8;
+  overflow-y: scroll;
 }
 
 .char {
   padding: 0;
   margin: 0;
   font-weight: bold;
+  font-size: 20px;
+}
+
+.line {
+  font-size: 20px;
 }
 
 .generate {
+  font-family: courier;
   width: 20vw;
   height: 6vh;
+  margin: 5% 10% 5% 5%;
+  border-radius: 16px;
+  border: none;
+  color: white;
+  background-color: black;
+  font-size: 20px;
+}
+
+.generate:hover {
+  cursor: pointer;
+}
+
+#dunder {
+  text-align: left;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

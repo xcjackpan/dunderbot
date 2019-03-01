@@ -12,8 +12,8 @@ class App extends Component {
     }
   }
 
-  generateScene = () => {    
-    axios.get("http://localhost:8080/scene").then(response => {
+  generateScene = () => {
+    axios.get("/scene").then(response => {
       let characters = response.data;
       let para = "";
       const len = characters.length;
@@ -21,7 +21,7 @@ class App extends Component {
         para += (characters[i] + ',')
       }
       para += characters[len - 1];
-      axios.get("http://localhost:8080/line?people=" + para).then(response => {
+      axios.get("/line?people=" + para).then(response => {
         let lines = response.data;
         let tmp = [];
         for (var i = 0; i < len; i++) {
@@ -35,8 +35,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <button className="generate" onClick={this.generateScene}>Hit me!</button>
         <Display scene={this.state.scene} />
-        <button className="generate" onClick={this.generateScene}>Generate</button>
       </div>
     );
   }

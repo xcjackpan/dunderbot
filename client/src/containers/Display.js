@@ -11,8 +11,11 @@ class Display extends Component {
 
   render() {
     return (
-      <div className="display">
-        {this.props.scene.map((elem) => <span display="line"><p className="char">{elem.char}:</p> <p className="line">{elem.line}</p></span>)}
+      <div>
+        <p id="dunder">Dunderbot says...</p>
+        <div className="display">
+          {this.props.scene.map((elem) => <span display="line"><p className="char">{elem.char}:</p> <p className="line">{elem.line}</p></span>)}
+        </div>
       </div>
     );
   }

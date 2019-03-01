@@ -70,13 +70,11 @@ function buildcharchain(charfilename, linesobj) {
             buildaction = !buildaction;
             action += words[j - 1];
             continue;
-          } else if (words[j - 1].indexOf(']') != -1) {
+          } else if (words[j - 1].indexOf(']') != -1 && buildaction) {
             buildaction = !buildaction;
             action += (' ' + words[j - 1]);
             linesobj['ACTIONS'].push(action.replace('"', ''));
             action = '';
-            continue;
-          } else if (words[j].indexOf(']') != -1 || words[j].indexOf('[') != -1) {
             continue;
           } else if (buildaction) {
             action += (' ' + words[j - 1].replace('"', ''));

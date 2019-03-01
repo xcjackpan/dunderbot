@@ -1,12 +1,11 @@
 const express = require('express')
+const path = require('path');
 const app = express()
 const port = 8080
 const generate = require('./data_processing/generate_lines.js')
 const cors = require('cors')
 
 app.use(cors())
-
-app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/line', (req, res) => {
   const people = req.query.people.split(','); //Receives a list of characters separated by commas
@@ -22,6 +21,6 @@ app.get('/scene', (req, res) => {
   res.send(generate.generateDialogue());
 });
 
-app.get('/fun', (req, res) => res.send(generate.generateLine("dwight")))
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.listen(port)
