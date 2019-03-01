@@ -6,6 +6,7 @@ const generate = require('./data_processing/generate_lines.js');
 const cors = require('cors');
 
 app.use(cors());
+app.listen(port);
 
 app.get('/line', (req, res) => {
   const people = req.query.people.split(','); //Receives a list of characters separated by commas
@@ -22,9 +23,3 @@ app.get('/scene', (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, 'client/build')));
-
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'client/build/index.html'));
-})
-
-app.listen(port);
