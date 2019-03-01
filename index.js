@@ -1,11 +1,11 @@
-const express = require('express')
+const express = require('express');
 const path = require('path');
-const app = express()
-const port = 8080
-const generate = require('./data_processing/generate_lines.js')
-const cors = require('cors')
+const app = express();
+const port = process.env.PORT || 8080;
+const generate = require('./data_processing/generate_lines.js');
+const cors = require('cors');
 
-app.use(cors())
+app.use(cors());
 
 app.get('/line', (req, res) => {
   const people = req.query.people.split(','); //Receives a list of characters separated by commas
@@ -23,4 +23,4 @@ app.get('/scene', (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.listen(port)
+app.listen(port);
